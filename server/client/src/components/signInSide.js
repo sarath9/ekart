@@ -5,8 +5,8 @@ import "./signInsignUp.scss";
 
 export default function SignIn() {
   const [loginData, setLoginData] = useState({
-    "Username":"",
-    "Password":""
+    "username":"",
+    "password":""
   });
 
 
@@ -20,7 +20,8 @@ export default function SignIn() {
   const onSubmit = (e, data) => {
     e.preventDefault();
     console.log(loginData, "data");
-    axios.post(`${process.env.REACT_APP_BASE_URL}/register`, { loginData }).then((res) => {
+    axios.post(`${process.env.REACT_APP_BASE_URL}/login`, { loginData }).then((res) => {
+      
       console.log(res, "res");
     }).catch((err) => {
       console.log(err, "err");
@@ -36,8 +37,8 @@ export default function SignIn() {
             <div className="formBx">
               <div>
                 <h2>Sign In</h2>
-                <input type="text" name="Username" placeholder="Username" vlaue={loginData.Username} onChange={handleChange}/>
-                <input type="password" name="Password" placeholder="Password" value={loginData.Password} onChange={handleChange}/>
+                <input type="text" name="username" placeholder="email" vlaue={loginData.username} onChange={handleChange}/>
+                <input type="password" name="password" placeholder="Password" value={loginData.password} onChange={handleChange}/>
                 <input type="submit" name="" value="Login" onClick={onSubmit}/>
                 <p className="signup">
                   Don't have an account ?

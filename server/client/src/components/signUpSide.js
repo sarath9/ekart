@@ -1,15 +1,25 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate  } from 'react-router-dom';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
 import axios from 'axios';
 import "./signInsignUp.scss";
 
-export default function SignUpSide() {
+const SignUpSide=(props)=> {
+  const { className } = props;
   const [signUpData, setSignUpData] = useState({
     "username": "",
     "email": "",
     "password": ""
   });
   const [error,setError]=useState("");
+  const [modal, setModal] = useState(false);
+  let navigate = useNavigate();
 
   const handleChange = (evt) => {
     setError("");
@@ -30,7 +40,8 @@ export default function SignUpSide() {
           "username": "",
           "email": "",
           "password": ""
-        })
+        });
+        setModal(true);
       } else if (res.data.status=="error") {
         setError('plase enter correct mail');
       }
@@ -39,6 +50,7 @@ export default function SignUpSide() {
       setError('something went wrong');
     })
   }
+  const toggle = () => setModal(!modal);
 
   return (
     <div>
@@ -64,6 +76,30 @@ export default function SignUpSide() {
           </div>
         </div>
       </section>
+      
+      <Modal
+        isOpen={modal}
+        toggle={toggle}
+        className={className}
+      >
+        <ModalHeader toggle={toggle}>WELCOME</ModalHeader>
+        <ModalBody>
+          HI YOUR SUCCESSFULLY CREATED ACCOUNT 
+          PLEASE LOGIN ....
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={()=>{
+            setModal(false);
+             navigate('/SignIn');
+          }}>
+            LOGIN
+          </Button>{' '}
+          <Button color="secondary" onClick={toggle}>
+            CANCEL
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   )
 }
+export default SignUpSide;
